@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/home"
+        android:title="主页"/>
+
+    <item
+        android:id="@+id/navigation_route"
+        android:icon="@drawable/route"
+        android:title="线路"/>
+
+    <item
+        android:id="@+id/navigation_culture"
+        android:icon="@drawable/culture"
+        android:title="文化"/>
+
+    <item
+        android:id="@+id/navigation_user"
+        android:icon="@drawable/user"
+        android:title="用户"/>
+
+</menu>

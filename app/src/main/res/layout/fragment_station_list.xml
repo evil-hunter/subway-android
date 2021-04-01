@@ -7,7 +7,7 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,18 +33,54 @@
                 app:title="地铁导行"/>
         </com.google.android.material.appbar.AppBarLayout>
 
+        
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="162dp"
+            android:layout_marginTop="56dp">
+        
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/m_swiper"
             android:layout_width="match_parent"
-            android:layout_height="162dp"
-            android:layout_marginTop="56dp"/>
-        <LinearLayout
-            android:id="@+id/view_indicators"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_marginTop="200dp"
-            android:gravity="center"
-            android:orientation="horizontal"/>
+            android:layout_height="match_parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dip"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:orientation="horizontal" >
+                <View
+                    android:id="@+id/dot_0"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/banner_focus"/>
+
+                <View
+                    android:id="@+id/dot_1"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/banner_blur"/>
+                <View
+                    android:id="@+id/dot_2"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/banner_blur"/>
+                <View
+                    android:id="@+id/dot_3"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/banner_blur"/>
+            </LinearLayout>
+        </FrameLayout>
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -73,7 +109,8 @@
         app:srcCompat="@drawable/ic_arrow_upward_black_24dp"
         app:pressedTranslationZ="@dimen/dp_40"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="VectorDrawableCompat">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 </androidx.constraintlayout.widget.ConstraintLayout>

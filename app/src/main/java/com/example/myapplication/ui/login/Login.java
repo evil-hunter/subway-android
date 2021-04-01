@@ -100,7 +100,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void login() {
-        String url = "http://192.168.137.1:4000/users/login";
+        String url = "http://10.18.209.35:4000/users/login";
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -110,6 +110,7 @@ public class Login extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             String jwt_token = jsonResponse.getString("jwt_token");
                             Toast.makeText(getApplicationContext(),"登录成功", Toast.LENGTH_SHORT).show();
+                            Log.e("token",jwt_token);
                             //返回token到LogonActivity
                             Intent intent = new Intent();
                             intent.putExtra("token", jwt_token);

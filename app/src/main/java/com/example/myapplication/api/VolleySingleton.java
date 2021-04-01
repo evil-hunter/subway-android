@@ -1,4 +1,4 @@
-package com.example.cimoshop.api;
+package com.example.myapplication.api;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,14 +10,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
-/**
- * 单例 Volley
- *
- * @author 谭海山
- */
 public class VolleySingleton {
 
-    private static final String TAG = "cimoVolley";
+    private static final String TAG = "Volley";
 
     /**
      * 私有化属性

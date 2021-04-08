@@ -6,7 +6,7 @@
     android:id="@+id/register_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.rejister.Register">
+    tools:context=".ui.register.Register">
 
     <ImageView
         android:id="@+id/imageView"

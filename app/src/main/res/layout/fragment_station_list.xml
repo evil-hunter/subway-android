@@ -80,6 +80,27 @@
                     android:background="@drawable/banner_blur"/>
             </LinearLayout>
         </FrameLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="220dp"
+            android:orientation="horizontal">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lineList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="6">
+            </androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/stationList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="4">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -94,7 +115,7 @@
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_v"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.4" />
 

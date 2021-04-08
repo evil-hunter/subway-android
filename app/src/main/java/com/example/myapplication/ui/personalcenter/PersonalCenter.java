@@ -68,7 +68,7 @@ public class PersonalCenter extends Fragment {
 
     private void initView(View root) {
 
-        toolbar = root.findViewById(R.id.personalCenterToobar);
+        toolbar = root.findViewById(R.id.personalCenterToolbar);
 
         logonbtn = root.findViewById(R.id.logonbtn);
 

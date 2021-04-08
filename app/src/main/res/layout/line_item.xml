@@ -7,20 +7,14 @@
     android:padding="5dp">
 
     <LinearLayout
-        android:id="@+id/stationItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         tools:ignore="MissingConstraints">
-        <ImageView
-            android:id="@+id/stationLogo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"/>
-        <TextView
-            android:id="@+id/stationName"
+        <Button
+            android:id="@+id/lineName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"/>
+            android:layout_height="50dp"
+            android:textSize="18sp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

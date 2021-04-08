@@ -1,12 +1,9 @@
-package com.example.myapplication.ui.rejister;
+package com.example.myapplication.ui.register;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +28,7 @@ import java.util.Map;
 public class Register extends AppCompatActivity {
 
     private static final String TAG = "SubWayLogin";
-    private static final String LOGIN_URL ="http://127.0.0.1:8080/users/register";
+    private static final String REGISTER_URL ="http://10.18.209.35:8080/users/register";
 
     ConstraintLayout constraintLayout;
     EditText username;
@@ -68,24 +65,21 @@ public class Register extends AppCompatActivity {
     }
 
     private void register() {
-        String url = "http://192.168.137.1:4000/users/register";
+        String url = "http://10.18.209.35:4000/users/register";
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject jsonResponse = new JSONObject(response).getJSONObject("form");
-                            String site = jsonResponse.getString("site"),
-                                    network = jsonResponse.getString("network");
-                            System.out.println("Site: "+site+"\nNetwork: "+network);
-                            Toast.makeText(getApplicationContext(),"注册成功", Toast.LENGTH_SHORT).show();
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String resInfo = jsonResponse.toString();
+                            Toast.makeText(getApplicationContext(),resInfo, Toast.LENGTH_SHORT).show();
 
                             Intent intent = new Intent();
                             intent.setClass(getApplicationContext(), Login.class);
                             finish();
                         } catch (JSONException e) {
-                            Toast.makeText(getApplicationContext(),"注册失败", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
                     }

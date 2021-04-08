@@ -23,7 +23,7 @@ android {
 
     sourceSets {
         main {
-            jniLibs.srcDirs = ['libs']
+
         }
     }
 }
@@ -33,11 +33,11 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation files('libs\\BaiduLBS_Android.jar')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
 
     //material材质设计语言
     implementation 'com.google.android.material:material:1.2.0-alpha06'
@@ -56,6 +56,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime:2.3.0-alpha02'
 
     //======= 第三方 ======
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
     //photoView 图片操作
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
@@ -86,5 +88,11 @@ dependencies {
 
     //百度地图
     implementation fileTree(dir:'libs',include:['*.jar'])
+
+    //网络请求
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
+
+    //recycleview
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
 }

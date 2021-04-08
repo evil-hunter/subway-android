@@ -8,7 +8,7 @@
     tools:context=".ui.personalcenter.PersonalCenter">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/personalCenterToobar"
+        android:id="@+id/personalCenterToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personalCenterToobar">
+        app:layout_constraintTop_toBottomOf="@+id/personalCenterToolbar">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/pcuseravatar"

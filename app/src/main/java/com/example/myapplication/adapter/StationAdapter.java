@@ -43,6 +43,10 @@ public class StationAdapter extends BaseQuickAdapter<StationBean, BaseViewHolder
         return super.getItemCount();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
 
     @Override
     protected void convert(@NotNull BaseViewHolder holder, StationBean item) {

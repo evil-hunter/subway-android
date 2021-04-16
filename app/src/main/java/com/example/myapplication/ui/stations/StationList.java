@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +33,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.LineAdapter;
@@ -38,6 +43,8 @@ import com.example.myapplication.api.VolleySingleton;
 import com.example.myapplication.datasource.SubwayDataSource;
 import com.example.myapplication.entity.LineBean;
 import com.example.myapplication.entity.StationBean;
+import com.example.myapplication.ui.login.Login;
+import com.example.myapplication.ui.register.Register;
 import com.example.myapplication.utils.UITools;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.gson.Gson;
@@ -82,6 +89,7 @@ public class StationList extends Fragment {
     private LineAdapter lineAdapter;
     private StationAdapter stationAdapter;
     private int currentItem;
+    private int stationCurrentItem = 0;
 //    private SearchView searchView;
     //记录上次点击位置
     private int oldPosition = 0;
@@ -108,6 +116,162 @@ public class StationList extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        lineAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, final int position) {
+                if(position == 7) {
+                    stationData.clear();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String url = "http://10.18.209.35:4000/home/stationlist";
+                            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            String resData;
+                                            Log.d("res",response);
+                                            JsonParser parser = new JsonParser();
+                                            JsonArray jsonArray = parser.parse(response).getAsJsonArray();
+                                            Log.d("jsonArray",jsonArray.toString());
+                                            Gson gson = new Gson();
+
+                                            for(JsonElement station : jsonArray) {
+                                                Log.d("station",station.toString());
+                                                StationBean stationBean = gson.fromJson(station, StationBean.class);
+                                                stationData.add(stationBean);
+                                                Log.d("Name",stationBean.getName());
+                                            }
+                                            resData = stationData.toString();
+
+                                            Log.d("Data",resData);
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            error.printStackTrace();
+                                        }
+                                    }
+                            ) {
+                                @Override
+                                protected Map<String, String> getParams()
+                                {
+                                    Map<String, String>  params = new HashMap<>();
+                                    // the POST parameters:
+                                    params.put("line", "9");
+                                    return params;
+                                }
+                            };
+                            Volley.newRequestQueue(getActivity()).add(postRequest);
+                        }
+                    }).start();
+
+                    stationAdapter = new StationAdapter(R.layout.station_item,stationData);
+                    stationList.setAdapter(stationAdapter);
+
+                    stationAdapter.setOnItemClickListener(new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("stationInfo",(Parcelable) adapter.getItem(position));
+
+                            Intent intent = new Intent(getContext(), StationDetail.class);
+                            intent.putExtras(bundle);
+
+                            //共享元素过度效果
+                            ActivityOptionsCompat compat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view, "detail_station");
+                            ActivityCompat.startActivity(getContext(), intent, compat.toBundle());
+                        }
+                    });
+                }
+
+                lineAdapter.setSelection(position);
+                stationData.clear();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String url = "http://10.18.209.35:4000/home/stationlist";
+                        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        String resData;
+                                        Log.d("res",response);
+                                        JsonParser parser = new JsonParser();
+                                        JsonArray jsonArray = parser.parse(response).getAsJsonArray();
+                                        Log.d("jsonArray",jsonArray.toString());
+                                        Gson gson = new Gson();
+
+                                        for(JsonElement station : jsonArray) {
+                                            Log.d("station",station.toString());
+                                            StationBean stationBean = gson.fromJson(station, StationBean.class);
+                                            stationData.add(stationBean);
+                                            Log.d("Name",stationBean.getName());
+                                        }
+                                        resData = stationData.toString();
+
+                                        Log.d("Data",resData);
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        error.printStackTrace();
+                                    }
+                                }
+                        ) {
+                            @Override
+                            protected Map<String, String> getParams()
+                            {
+                                Map<String, String>  params = new HashMap<>();
+                                // the POST parameters:
+                                params.put("line", String.valueOf(position));
+                                return params;
+                            }
+                        };
+                        Volley.newRequestQueue(getActivity()).add(postRequest);
+                    }
+                }).start();
+
+                stationAdapter = new StationAdapter(R.layout.station_item,stationData);
+                stationList.setAdapter(stationAdapter);
+
+                stationAdapter.setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("stationInfo",(Parcelable) adapter.getItem(position));
+
+                        Intent intent = new Intent(getContext(), StationDetail.class);
+                        intent.putExtras(bundle);
+
+                        //共享元素过度效果
+                        ActivityOptionsCompat compat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view, "detail_station");
+                        ActivityCompat.startActivity(getContext(), intent, compat.toBundle());
+                    }
+                });
+
+            }
+        });
+
+        stationAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("stationInfo",(Parcelable) adapter.getItem(position));
+
+                Intent intent = new Intent(getContext(), StationDetail.class);
+                intent.putExtras(bundle);
+
+                //共享元素过度效果
+                ActivityOptionsCompat compat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view, "detail_station");
+                ActivityCompat.startActivity(getContext(), intent, compat.toBundle());
+            }
+        });
+
     }
 
     @Override
@@ -139,7 +303,7 @@ public class StationList extends Fragment {
                             Log.d("Name",stationBean.getName());
                         }
                         resData = stationData.toString();
-                        Toast.makeText(getActivity(),resData,Toast.LENGTH_LONG).show();
+
                         Log.d("Data",resData);
                     }
                 },
@@ -189,6 +353,7 @@ public class StationList extends Fragment {
 
         //创建适配器
         lineAdapter = new LineAdapter(R.layout.line_item, lineData);
+        lineAdapter.setSelection(0);
         stationAdapter = new StationAdapter(R.layout.station_item,stationData);
 
         //给RecyclerView设置适配器

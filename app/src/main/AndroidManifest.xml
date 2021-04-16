@@ -27,6 +27,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity android:name=".ui.login.Login" />
+        <activity android:name=".ui.stations.StationDetail"/>
         <activity android:name=".ui.register.Register" />
         <activity
             android:name=".MainActivity"
